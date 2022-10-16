@@ -2,6 +2,7 @@ import pandas as pd
 import time
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
+pd.set_option('display.max_colwidth', None)
 
 
 def ip_int(ip_str):
@@ -15,13 +16,16 @@ def ip_int(ip_str):
     return num
 
 
-df = pd.read_csv('access.log', sep='\t', encoding='utf-8', header=None, names=['Apache_log'])
+# Read data
+df = pd.read_csv('data/access.log', sep='\t', encoding='utf-8', header=None, names=['Apache_log'])
 df.columns = ['log']
+df = df.head(5)
+print(df)
 pat1 = r'^(?P<IP>\S+)\s+\S+\s+\S+\s+'
 pat2 = r'\[(?P<timestamp>.+)\]\s+'
 pat3 = r'"(?P<request>.+)"\s+'
 pat4 = r'(?P<code>\S+)\s+(?P<size>\S+)'
-pat = pat1 + pat2 +pat3 +pat4
+pat = pat1 + pat2 + pat3 + pat4
 
 series = df['log'].str.split(pat, expand=True)
 df['ip'] = series[1].apply(lambda x: ip_int(x))
