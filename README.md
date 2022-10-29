@@ -9,6 +9,6 @@ Deal with 1.4 million data only cost 0.12 second. It is good to use `pandas.cut`
 ~~~
 
 Skill
-~~~
+~~~python
 pd.cut(x=df.index, bins=ip_list, include_lowest=True, labels=index).astype(int)
 ~~~
